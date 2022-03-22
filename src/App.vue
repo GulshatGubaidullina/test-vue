@@ -1,8 +1,17 @@
 <template>
   <div id="app">
     <h1>Список задач</h1>
-    <AddToDo />
-    <ToDoList v-bind:arrayTasks="arrayTasks" @delete-task="deleteTask" />
+    <AddToDo @add-a-new-task="addANewTask" />
+    <h2 v-if="arrayTasks.length < 1">Задач нет!</h2>
+    <ToDoList
+      v-else
+      v-bind:arrayTasks="arrayTasks"
+      v-bind:completedTasks="completedTasks"
+      @delete-task="deleteTask"
+      @reversed-items="reversedItems"
+      @delete-all="deleteAll"
+      @do-check="doCheck"
+    />
   </div>
 </template>
 
@@ -14,24 +23,49 @@ export default {
   name: "App",
   data() {
     return {
-      arrayTasks: [
-        {
-          id: 1,
-          title: "title1",
-          completed: false,
-        },
-        {
-          id: 2,
-          title: "title2",
-          completed: false,
-        },
-      ],
+      arrayTasks: [],
+      completedTasks: [],
     };
   },
   components: { ToDoList, AddToDo },
   methods: {
     deleteTask(id) {
       this.arrayTasks = this.arrayTasks.filter((t) => t.id != id);
+    },
+    addANewTask(todo) {
+      this.arrayTasks.push(todo);
+    },
+    reversedItems() {
+      return this.arrayTasks.reverse();
+    },
+    deleteAll() {
+      this.arrayTasks = [];
+    },
+    doCheck(task, type) {
+      console.log(type);
+      if (type === "need") {
+        const elem = {
+          id: task.id,
+          title: task.title,
+          completed: true,
+        };
+        this.arrayTasks = this.arrayTasks.filter((t) => t.id != task.id);
+        this.completedTasks.push(elem);
+        console.log(task, this.arrayTasks, this.completedTasks);
+      } else {
+        console.log(task);
+        const elem = {
+          id: task.id,
+          title: task.title,
+          completed: false,
+        };
+        this.completedTasks = this.completedTasks.filter(
+          (t) => t.id != task.id
+        );
+        console.log(elem);
+        this.arrayTasks.push(elem);
+        console.log(task, this.arrayTasks, this.completedTasks);
+      }
     },
   },
 };
@@ -46,7 +80,6 @@ body {
 #app {
   margin: 120px auto;
   max-width: 400px;
-  width: 100%;
   background: #918e94;
   border-radius: 5px;
   padding: 25px;

@@ -1,6 +1,6 @@
 <template>
   <li>
-    <input type="checkbox" @change="$emit('do-check', task, 'need')" />
+    <input type="checkbox" @change="$emit('do-check', task.id, 'completed')" />
     {{ task.title }}
     <button id="delete-button" @click="$emit('delete-task', task.id)">X</button>
   </li>
