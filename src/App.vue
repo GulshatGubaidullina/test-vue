@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Список задач</h1>
-    <AddToDo @add-a-new-task="addANewTask" />
+    <AddToDo @add-a-new-task="addANewTask" @find-a-task="findATask" />
     <h2 v-if="arrayTasks.length < 1">Задач нет!</h2>
     <ToDoList
       v-else
@@ -29,8 +29,12 @@ export default {
   },
   components: { ToDoList, AddToDo },
   methods: {
-    deleteTask(id) {
-      this.arrayTasks = this.arrayTasks.filter((t) => t.id != id);
+    deleteTask(id, type) {
+      if (type === "need") {
+        this.arrayTasks = this.arrayTasks.filter((t) => t.id != id);
+      } else {
+        this.completedTasks = this.completedTasks.filter((t) => t.id != id);
+      }
     },
     addANewTask(todo) {
       this.arrayTasks.push(todo);
@@ -40,9 +44,9 @@ export default {
     },
     deleteAll() {
       this.arrayTasks = [];
+      this.completedTasks = [];
     },
     doCheck(task, type) {
-      console.log(type);
       if (type === "need") {
         const elem = {
           id: task.id,
@@ -51,9 +55,7 @@ export default {
         };
         this.arrayTasks = this.arrayTasks.filter((t) => t.id != task.id);
         this.completedTasks.push(elem);
-        console.log(task, this.arrayTasks, this.completedTasks);
       } else {
-        console.log(task);
         const elem = {
           id: task.id,
           title: task.title,
@@ -62,11 +64,10 @@ export default {
         this.completedTasks = this.completedTasks.filter(
           (t) => t.id != task.id
         );
-        console.log(elem);
         this.arrayTasks.push(elem);
-        console.log(task, this.arrayTasks, this.completedTasks);
       }
     },
+    findATask(value) {},
   },
 };
 </script>

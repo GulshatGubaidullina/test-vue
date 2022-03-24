@@ -35,8 +35,8 @@ export default {
     CompletedTasks,
   },
   methods: {
-    deleteTask(id) {
-      this.$emit("delete-task", id);
+    deleteTask(id, type) {
+      this.$emit("delete-task", id, type);
     },
     reversedItems() {
       this.$emit("reversed-items");

@@ -1,8 +1,13 @@
 <template>
-  <li>
-    <input type="checkbox" @change="$emit('do-check', task.id, 'completed')" />
+  <li id="completed-li">
+    <input type="checkbox" @change="$emit('do-check', task, 'completed')" />
     {{ task.title }}
-    <button id="delete-button" @click="$emit('delete-task', task.id)">X</button>
+    <button
+      id="delete-button"
+      @click="$emit('delete-task', task.id, 'completed')"
+    >
+      X
+    </button>
   </li>
 </template>
 
@@ -13,9 +18,10 @@ export default {
 </script>
 
 <style>
-li {
+#completed-li {
   padding: 1em;
   list-style-type: none;
+  opacity: 0.5;
 }
 #delete-button {
   border-radius: 30%;

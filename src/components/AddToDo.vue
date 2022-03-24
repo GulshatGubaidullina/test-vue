@@ -7,6 +7,7 @@
       v-on:keypress.enter="setMessage(title)"
     />
     <button id="add-butten" @click="setMessage(title)">Добавить</button>
+    <button @click="findATask(title)" id="find-a-task">Найти</button>
   </div>
 </template>
 
@@ -26,6 +27,12 @@ export default {
           completed: false,
         };
         this.$emit("add-a-new-task", newToDo);
+        this.title = "";
+      }
+    },
+    findATask(value) {
+      if (value != "") {
+        this.$emit("find-a-task", value);
         this.title = "";
       }
     },
