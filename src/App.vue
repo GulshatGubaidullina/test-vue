@@ -2,6 +2,8 @@
   <div id="app">
     <h1>Список задач</h1>
     <AddToDo @add-a-new-task="addANewTask" @find-a-task="findATask" />
+    <h2 v-if="messageIndex === 0">Такая задача есть!</h2>
+    <h2 v-else-if="messageIndex === 1">Такой задачи нет!</h2>
     <h2 v-if="arrayTasks.length < 1">Задач нет!</h2>
     <ToDoList
       v-else
@@ -25,6 +27,7 @@ export default {
     return {
       arrayTasks: [],
       completedTasks: [],
+      messageIndex: -1,
     };
   },
   components: { ToDoList, AddToDo },
@@ -67,7 +70,19 @@ export default {
         this.arrayTasks.push(elem);
       }
     },
-    findATask(value) {},
+    findATask(value) {
+      console.log(value);
+      if (this.arrayTasks.includes(value)) {
+        this.messageIndex = 0;
+        console.log(3);
+      } else if (this.completedTasks.includes(value)) {
+        this.messageIndex = 0;
+        console.log(4);
+      } else {
+        this.messageIndex = 1;
+        console.log(5);
+      }
+    },
   },
 };
 </script>

@@ -31,6 +31,7 @@ export default {
       }
     },
     findATask(value) {
+      console.log(1);
       if (value != "") {
         this.$emit("find-a-task", value);
         this.title = "";
@@ -48,7 +49,8 @@ export default {
   font-size: 27px;
   border-radius: 3px;
 }
-#add-butten {
+#add-butten,
+#find-a-task {
   width: 80px;
   height: 40px;
   border: none;
